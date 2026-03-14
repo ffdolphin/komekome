@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 setlocal
 :: Set code page to UTF-8 to handle Japanese characters correctly in CMD
 chcp 65001 >nul
