@@ -1,5 +1,8 @@
 @echo off
 setlocal
+:: Set code page to UTF-8 to handle Japanese characters correctly in CMD
+chcp 65001 >nul
+
 echo -----------------------------------------------
 echo    Rice Tracker Premium Launcher for Windows
 echo -----------------------------------------------
@@ -25,13 +28,33 @@ echo Node.js が見つかりました: && node -v
 cd /d %~dp0
 
 :: Install dependencies
-echo 依存関係を確認中...
+echo 依存関係を確認・インストール中...
 call npm install
+if %errorlevel% neq 0 (
+    echo 【エラー】パッケージのインストールに失敗しました。
+    echo インターネット接続を確認してください。
+    pause
+    exit /b
+)
+
+:: Install Playwright Browsers
+echo ブラウザ環境をセットアップ中 (初回のみ時間がかかります)...
+call npx playwright install chromium firefox
+if %errorlevel% neq 0 (
+    echo 【警告】ブラウザのインストールに失敗した可能性があります。
+    echo 実行時にエラーが出る場合は `npx playwright install` を手動で試してください。
+)
 
 :: Start server
 echo サーバーを起動しています...
 :: Open browser after a short delay
 start http://127.0.0.1:3333
 node server.js
+
+if %errorlevel% neq 0 (
+    echo.
+    echo 【エラー】サーバーの起動中に問題が発生しました。
+    pause
+)
 
 pause
