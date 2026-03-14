@@ -15,7 +15,7 @@ if %errorlevel% neq 0 (
     echo.
     echo 1. ブラウザでダウンロードページを開きます...
     start https://nodejs.org/
-    echo 2. 推奨版(LTS)をダウンロードしてインストールしてください。
+    echo "2. 推奨版(LTS)をダウンロードしてインストールしてください。"
     echo 3. インストール完了後、このファイルを再度開いてください。
     echo.
     pause
